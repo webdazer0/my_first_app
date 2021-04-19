@@ -21,10 +21,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   String baseUrl = 'https://librojs.herokuapp.com/api/books';
+  List data;
+  List booksData;
 
   getBooks() async {
     http.Response response = await http.get(Uri.parse(baseUrl));
-    debugPrint(response.body);
+    data = json.decode(response.body);
+    // debugPrint(response.body);
+    setState(() {
+      booksData = data;
+    });
   }
 
   @override
@@ -38,6 +44,19 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Webdazer0 Appbar'),
+      ),
+      body: ListView.builder(
+          itemCount: booksData == null ? 0 : booksData.length,
+          itemBuilder: (BuildContext context, int i) {
+            return Card(
+              child: Row(
+                children: <Widget>[
+                  Text("${booksData[i]["title"]}"),
+                ],
+              ),
+
+            );
+          }
       ),
     );
   }
