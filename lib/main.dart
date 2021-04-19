@@ -19,7 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   String baseUrl = 'https://librojs.herokuapp.com/api/books';
   List data;
   List booksData;
@@ -49,15 +48,32 @@ class _HomePageState extends State<HomePage> {
           itemCount: booksData == null ? 0 : booksData.length,
           itemBuilder: (BuildContext context, int i) {
             return Card(
-              child: Row(
-                children: <Widget>[
-                  Text("${booksData[i]["title"]}"),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "$i",
+                        style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(booksData[i]["imageThumb"]),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("${booksData[i]["title"]}", style: TextStyle(
+                        fontSize: 20.0, fontWeight: FontWeight.w700
+                      ),),
+                    )
+                  ],
+                ),
               ),
-
             );
-          }
-      ),
+          }),
     );
   }
 }
